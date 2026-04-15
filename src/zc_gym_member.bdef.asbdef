@@ -1,0 +1,13 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_GYM_MEMBER alias GymMember
+{
+  use create;
+  use update;
+  use delete;
+
+  use action ActivateMembership;
+  use action CancelMembership;
+  use action RenewMembership;
+}

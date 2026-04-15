@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Gym Member'
+define service ZUI_GYM_MEMBER_SRV {
+  expose ZC_GYM_MEMBER as GymMember;
+}

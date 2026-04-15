@@ -1,0 +1,148 @@
+
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: {
+    typeName: 'Gym Member',
+    typeNamePlural: 'Gym Members',
+    title: { type: #STANDARD, value: 'MemberName' }
+  }
+}
+annotate view ZC_GYM_MEMBER with
+{
+  @UI.facet: [ 
+    /* --- NEW: KPI Badge in Header --- */
+    {
+      id:              'StatusBadge',
+      purpose:         #HEADER,
+      type:            #DATAPOINT_REFERENCE,
+      targetQualifier: 'StatusDataPoint',
+      position:        10
+    },
+    
+    {
+      id:              'HeaderPlanBadge',
+      purpose:         #HEADER,
+      type:            #DATAPOINT_REFERENCE,
+      targetQualifier: 'PlanBadge',
+      position:        10
+    },
+    
+    /* --- Existing: Member Details Form --- */
+    {
+      id:              'MemberDetails',
+      purpose:         #STANDARD,
+      type:            #IDENTIFICATION_REFERENCE,
+      label:           'Member Information',
+      position:        20
+    } 
+  ]
+
+  @UI.hidden: true
+  MemberId;
+
+  @UI: {
+    lineItem:       [ { position: 10, importance: #HIGH } ],
+    identification: [ { position: 10 } ],
+    selectionField: [ { position: 10 } ]
+  }
+  @EndUserText.label: 'Member Name'  
+  MemberName;
+
+  @UI: {
+    lineItem:       [ { position: 20, importance: #HIGH } ],
+    identification: [ { position: 20 } ]
+  }
+  @EndUserText.label: 'Email Address' 
+  Email;
+
+  @UI.identification: [ { position: 30 } ]
+  @EndUserText.label: 'Phone Number'  
+  Phone;
+
+  @UI: {
+    lineItem:       [ { position: 40, importance: #HIGH, criticality: 'PlanCriticality', criticalityRepresentation: #WITHOUT_ICON } ],
+    identification: [ { position: 40, criticality: 'PlanCriticality', criticalityRepresentation: #WITHOUT_ICON } ],
+    selectionField: [ { position: 20 } ],
+    
+    /* --- NEW: This creates the actual KPI Badge UI --- */
+    dataPoint: { 
+      qualifier: 'PlanBadge', 
+      title: 'Current Plan', 
+      criticality: 'PlanCriticality', 
+      criticalityRepresentation: #WITHOUT_ICON 
+    }
+  }
+  @EndUserText.label: 'Plan Type'
+  PlanType;
+
+  @UI: {
+    lineItem:       [ { position: 50, importance: #MEDIUM } ],
+    identification: [ { position: 50 } ]
+  }
+  @EndUserText.label: 'Start Date'    
+  StartDate;
+
+  @UI: {
+    lineItem:       [ { position: 60, importance: #MEDIUM } ],
+    identification: [ { position: 60 } ]
+  }
+  @EndUserText.label: 'End Date'     
+  EndDate;
+
+  /* --- UPDATED: Added Criticality and DataPoint for Color and Badge --- */
+  @UI: {
+    lineItem: [
+      { position: 70, importance: #HIGH, criticality: 'StatusCriticality' },
+      { type: #FOR_ACTION, dataAction: 'ActivateMembership', label: 'Activate', position: 10 },
+      { type: #FOR_ACTION, dataAction: 'CancelMembership',   label: 'Cancel',   position: 20 },
+      { type: #FOR_ACTION, dataAction: 'RenewMembership',    label: 'Renew',    position: 30 }
+    ],
+    identification: [
+      { position: 70, criticality: 'StatusCriticality' },
+      { type: #FOR_ACTION, dataAction: 'ActivateMembership', label: 'Activate', position: 10 },
+      { type: #FOR_ACTION, dataAction: 'CancelMembership',   label: 'Cancel',   position: 20 },
+      { type: #FOR_ACTION, dataAction: 'RenewMembership',    label: 'Renew',    position: 30 }
+    ],
+    selectionField: [ { position: 30 } ],
+    dataPoint: { 
+      title: 'Current Status', 
+      qualifier: 'StatusDataPoint', 
+      criticality: 'StatusCriticality' 
+    }
+  }
+  @EndUserText.label: 'Status'        
+  Status;
+
+  @UI: {
+    lineItem:       [ { position: 80, importance: #MEDIUM } ],
+    identification: [ { position: 80 } ]
+  }
+  @EndUserText.label: 'Monthly Fee'   
+  MonthlyFee;
+
+  @EndUserText.label: 'Currency'
+  CurrencyCode;
+
+  /* --- NEW: Hide the number value used for the color --- */
+  @UI.hidden: true
+  StatusCriticality;
+  
+  @UI.hidden: true
+  PlanCriticality;
+
+  @UI.hidden: true
+  CreatedBy;
+  
+  @UI.hidden: true
+  CreatedAt;
+  
+  @UI.hidden: true
+  LastChangedBy;
+  
+  @UI.hidden: true
+  LastChangedAt;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}
